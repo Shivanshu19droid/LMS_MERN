@@ -1,0 +1,28 @@
+# ===== Node Modules =====
+client/node_modules/
+server/node_modules/
+
+# ===== Build and Dist Folders =====
+client/build/
+server/dist/
+
+# ===== Logs =====
+*.log
+npm-debug.log*
+
+# ===== Environment Files =====
+client/.env
+server/.env
+.env
+
+# ===== OS & Editor Junk =====
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ===== Coverage =====
+coverage/
+
+# ===== React Cache =====
+client/.parcel-cache/
