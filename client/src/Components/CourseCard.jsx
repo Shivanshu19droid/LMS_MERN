@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-function CourseCard(data){
+function CourseCard({data}){
     const navigate = useNavigate();
+
+    console.log(data.title);
 
     return(
         <div 
