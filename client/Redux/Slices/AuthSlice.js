@@ -6,7 +6,7 @@ import axiosInstance from '../../src/Helpers/axiosInstance';
 const initialState = {
     isLoggedIn: localStorage.getItem('isLoggedIn') || false,
     role: localStorage.getItem('role') || "",
-    data: localStorage.getItem('data') || {}
+    data: JSON.parse(localStorage.getItem('data')) || {}   //used JSON.parse so that the data stored in redux stays in json form even after refreshing the page
 
 };
 

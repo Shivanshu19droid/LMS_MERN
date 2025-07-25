@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 function HomePage() {
   return (
     <HomeLayout>
-      <div className="pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh">
+      <div className="min-h-[90vh] flex items-center justify-center">
+        <div className="pt-10 text-white flex items-center justify-center gap-10 mx-16 h-[90vh">
         <div className="w-1/2 space-y-6">
           <h1 className="text-5xl font-semibold">
             Find Out best 
@@ -33,6 +34,7 @@ function HomePage() {
         <div className="w-1/2 flex items-center justify-center ">
           <img src="src\assets\home_page.png" className="rounded-md"/>
         </div>
+      </div>
       </div>
     </HomeLayout>
   );
