@@ -17,6 +17,6 @@ router.get('/me', isLoggedIn, getProfile);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:resetToken', resetPassword);
 router.post('/change-password', isLoggedIn, changePassword); //this route is to change the password when you remember the existing one
-router.post('/update/', isLoggedIn, upload.single("avatar"), updateUser);
+router.post('/update/:id', isLoggedIn, upload.single("avatar"), updateUser);
 
 export default router;

@@ -6,7 +6,7 @@ import axiosInstance from '../../src/Helpers/axiosInstance';
 const initialState = {
     isLoggedIn: localStorage.getItem('isLoggedIn') || false,
     role: localStorage.getItem('role') || "",
-    data: JSON.parse(localStorage.getItem('data')) || {}   //used JSON.parse so that the data stored in redux stays in json form even after refreshing the page
+    data: localStorage.getItem('data') !== undefined ? JSON.parse(localStorage.getItem('data')) : {}   //used JSON.parse so that the data stored in redux stays in json form even after refreshing the page
 
 };
 
@@ -70,6 +70,16 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.role = "";
         })
+        .addCase(getUserData.fulfilled, (state, action) => {
+            if(!action?.payload?.user) return;
+            localStorage.setItem("data", JSON.stringify(action?.payload?.user));
+            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("role", action?.payload?.user?.role);
+
+            state.isLoggedIn = true;
+            state.data = action?.payload?.user;
+            state.role = action?.payload?.user?.role;
+        })
 
         
     }
@@ -92,7 +102,41 @@ const authSlice = createSlice({
         } catch(error){
             toast.error(error?.response?.data?.message);
         }
-    })
+    });
+
+//async thunk to handle profile update
+    export const updateProfile = createAsyncThunk('/user/update/profile', async({id, data}) => {
+        try{
+            const res = axiosInstance.post(`/user/update/${id}`, data, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                withCredentials: true,
+            });
+            toast.promise(res, {
+                loading: "Wait! profile update in progress...",
+                success: (data) => {
+                    return data?.data?.message;
+                },
+                error: "Failed to update profile"
+            });
+            return (await res).data;
+        } catch(error) {
+            toast.error(error?.response?.data?.message);
+            
+        }
+    });
+
+//now sicne the user data is updated, the whole app will be needed to be refreshed to save the changes for the entire app - so we create another async thunk to fetch user data from the server, when the user data is fetched then we will do a state update
+export const getUserData = createAsyncThunk("/user/details", async() => {
+    try{
+        const res = axiosInstance.get('user/me');
+        return (await res).data;
+    } catch(error) {
+        toast.error(error.message);
+    }
+})
+
 
 
 

@@ -287,7 +287,7 @@ const updateUser = async (req, res, next) => {
       )
     }
 
-    if(req.fullName){
+    if(fullName){
       user.fullName = fullName;
     }
 
