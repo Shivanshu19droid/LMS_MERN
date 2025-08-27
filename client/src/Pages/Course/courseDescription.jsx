@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { useSelector } from "react-redux";
 
 function CourseDescription() {
     
     const { state } = useLocation(); //if we store this in a variable, then the entire object fetched using useLocation() is stored in that variable, so here we directly fetch the state which stores the data of the course we want to display
+    const navigate = useNavigate();
 
     const { role, data } = useSelector((state) => state.auth); //this role will store - user/ admin and will be used for conditional rendering
 
@@ -39,11 +40,11 @@ function CourseDescription() {
                     </div>
 
                     { role === "ADMIN" || data?.subscription?.status === "active" ? (
-                        <button onClick={() => Navigate("/course/displaylectures", {state: {...state}})} className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300">
+                        <button onClick={() => navigate("/course/displaylectures", {state: {...state}})} className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300">
                             Watch Lectures
                         </button>
                         ) : (
-                        <button className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300">
+                        <button onClick={() => navigate("/checkout")} className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300">
                             Subscribe
                         </button>
                         )}

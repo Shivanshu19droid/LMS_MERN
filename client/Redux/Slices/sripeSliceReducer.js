@@ -1,4 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import axiosInstance from "../../src/Helpers/axiosInstance";
+import toast from "react-hot-toast";
+import { getUserData } from "./AuthSlice";
 
 const initialState = {
     key: "",
@@ -9,9 +12,9 @@ const initialState = {
     monthlySalesRecord: []
 }
 
-export const getRazorPayId = createAsyncThunk("/razorpay/getId", async () => {
+export const getStripeApiKey = createAsyncThunk("/stripe/getKey", async () => {
     try{
-        const response = await axiosInstance.get("/payments/razorpay-key");
+        const response = await axiosInstance.get("/payments/stripe-key");
         return response.data;
     } catch(error){
         toast.error("Failed to load data");
@@ -20,19 +23,17 @@ export const getRazorPayId = createAsyncThunk("/razorpay/getId", async () => {
 
 export const purchaseCourseBundle = createAsyncThunk("purchaseCourse", async () => {
     try{
-        const response = await axiosInstance.get("/payments/subscribe");
+        const response = await axiosInstance.post("/payments/subscribe");
         return response.data;
     } catch(error){
         toast.error(error?.response?.data?.message);
     }
 });
 
-export const verifyUserPayment = createAsyncThunk("payments/verify", async (data) => {
+export const verifyUserPayment = createAsyncThunk("payments/verify", async (subscription_id) => {
     try{
         const response = await axiosInstance.post("/payments/verify", {
-            razorpay_payment_id: data.razorpay_payment_id,
-            razorpay_subscription_id: data.razorpay_subscription_id,
-            razorpay_signature: data.razorpay_signature
+            subscription_id
         });
         return response.data;
     } catch(error){
@@ -42,7 +43,7 @@ export const verifyUserPayment = createAsyncThunk("payments/verify", async (data
 
 export const getPaymentRecord = createAsyncThunk("payments/record", async () => {
     try{
-        const response = axiosInstance.post("/payments?count=100");
+        const response = axiosInstance.get("/payments?count=100");
         toast.promise(response, {
             loading: "Getting the payment records",
             success: (data) => {
@@ -58,12 +59,10 @@ export const getPaymentRecord = createAsyncThunk("payments/record", async () => 
 
 export const cancelCourseBundle = createAsyncThunk("payments/cancel", async () => {
     try{
-        const response = axiosInstance.post("/payments/unsubscribe");
+        const response = axiosInstance.get("/payments/unsubscribe");
         toast.promise(response, {
-            loading: "Unsubscribing the bundle",
-            success: (data) => {
-                return data?.data?.message
-            },
+            loading: "Processing cancellation",
+            success: "Cancellation successful",
             error: "Failed to unsubscribe"
         })
         return (await response).data;
@@ -72,24 +71,41 @@ export const cancelCourseBundle = createAsyncThunk("payments/cancel", async () =
     }
 });
 
-const razorpaySlice = createSlice({
-    name: "razorpay",
+export const getSubscriptionId = createAsyncThunk("payments/getSubscription_id", async() => {
+    try{
+        const response = axiosInstance.get("/payments/get-subscription");
+        toast.promise(response, {
+            loading: "Processing your request",
+            success: "Subscription Active",
+            error:"Failed to create subscription"
+        })
+        return(await response).data;
+    } catch(error){
+        toast.error(error?.response?.data?.message);
+    }
+})
+
+const stripeSlice = createSlice({
+    name: "stripe",
     initialState,
     reducers: {},  //to handle synchronous actions
     extraReducers: (builder) => {  //extra reducers to handle async actions
       builder
-      .addCase(getRazorPayId.fulfilled, (state, action) => {
+      .addCase(getStripeApiKey.fulfilled, (state, action) => {
         state.key = action?.payload?.key;
       })
       .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
-        state.subscription_id = action?.payload?.subscription_id;
+        //state.subscription_id = action?.payload?.subscription_id;
+        //state.clientSecret = action?.payload?.clientSecret;
+        state.sessionId = action?.payload?.id;
+        state.checkouturl = action?.payload?.url;
       })
       .addCase(verifyUserPayment.fulfilled, (state, action) => {
         toast.success(action?.payload?.message);
         state.isPaymentVerfied = action?.payload?.success;
       })
       .addCase(verifyUserPayment.rejected, (state, action) => {
-        toat.success(action?.payload?.message);
+        toast.success(action?.payload?.message);
         state.isPaymentVerfied = action?.payload?.success;
       })
       .addCase(getPaymentRecord.fulfilled, (state, action) => {
@@ -97,8 +113,13 @@ const razorpaySlice = createSlice({
         state.finalMonths = action?.payload?.finalMonths;
         state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
       })
+      .addCase(getSubscriptionId.fulfilled, (state, action) => {
+        state.subscriptionId = action?.payload?.subscriptionId;
+        state.status = "active";
+        state.isPaymentVerfied = true;
+      })
     }
 
 })
 
-export default razorpaySlice.reducer;
+export default stripeSlice.reducer;

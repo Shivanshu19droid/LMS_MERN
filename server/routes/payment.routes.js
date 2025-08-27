@@ -2,10 +2,10 @@ import { Router } from "express";
 import {
   getStripeApiKey,
   buySubscription,
-  verifySubscription,
   cancelSubscription,
   allPayments,
-} from "../controllers/payment_stripe.controller.js";
+  getSubscription
+} from "../controllers/new_stripe_controller.js";
 import { isLoggedIn } from "../middlewares/auth.middleware.js";
 import { authorizedRoles } from "../middlewares/auth.middleware.js";
 
@@ -16,9 +16,13 @@ paymentRoutes.route("/stripe-key").get(isLoggedIn, getStripeApiKey);
 
 paymentRoutes.route("/subscribe").post(isLoggedIn, buySubscription);
 
-paymentRoutes.route("/verify").post(isLoggedIn, verifySubscription);
+paymentRoutes.route("/get-subscription").get(isLoggedIn, getSubscription);
+
+//paymentRoutes.route("/verify").post(isLoggedIn, verifySubscription); 
 
 paymentRoutes.route("/unsubscribe").get(isLoggedIn, cancelSubscription);
+
+//paymentRoutes.route("/create_checkout_session").get(isLoggedIn, createCheckoutSession);
 
 paymentRoutes //this route is to show all the payment details and will be accessible to the admin only
   .route("/")

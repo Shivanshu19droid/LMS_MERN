@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 import User from '../models/user.model.js'
 import { config } from "dotenv";
 
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 //returning the stripe publishable key to the front end
@@ -55,6 +56,8 @@ const buySubscription = async(req, res, next) => {
         expand: ["latest_invoice.payment_intent"],
        });
 
+       //console.log(subscription);
+
        user.subscription.id = subscription.id;
        user.subscription.status = subscription.status;
 
@@ -63,7 +66,7 @@ const buySubscription = async(req, res, next) => {
        res.status(200).json({
       success: true,
       subscriptionId: subscription.id,
-      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+      clientSecret: subscription?.latest_invoice?.payment_intent?.client_secret,
     });
 
     } catch(error){
@@ -132,7 +135,7 @@ const cancelSubscription = async(req, res, next) => {
 
         const subscriptionId = user.subscription.id;
 
-        const cancelledSubscription = await stripe.subscriptions.del(subscriptionId);
+        const cancelledSubscription = await stripe.subscriptions.cancel(subscriptionId);
 
         user.subscription.status = cancelledSubscription.status; //likely cancelled
 
@@ -155,7 +158,7 @@ const allPayments = async(req, res, next) => {
 
        const subscriptions = await stripe.subscriptions.list({limit: count || 10});
 
-       res.status(200).json({
+        res.status(200).json({
         success: true,
         message: "List of all subscriptions",
         subscriptions
@@ -165,12 +168,40 @@ const allPayments = async(req, res, next) => {
     }
 };
 
+
+
+const createCheckoutSession = async (req, res, next) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "subscription", // or "payment" for one-time
+      line_items: [
+        {
+          price: process.env.STRIPE_PRICE_ID, // replace with your Stripe Price ID
+          quantity: 1,
+        },
+      ],
+      success_url: `${process.env.FRONTEND_URL}/checkout/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/checkout/failure`,
+    });
+
+    res.status(200).json({
+      success: true,
+      id: session.id,
+      url: session.url,
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 500));
+  }
+};
+
 export{
     getStripeApiKey,
     buySubscription,
     verifySubscription,
     cancelSubscription,
-    allPayments
+    allPayments,
+    createCheckoutSession
 }
 
 

@@ -48,8 +48,8 @@ const userSchema = new Schema({
         id: String,
         status: String
     },
-    stripeCustomerId: {
-        type: 'String'
+    stripeSessionId:{
+        type: String
     }
 }, {
     timestamps: true

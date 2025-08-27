@@ -2,12 +2,25 @@ import { useDispatch } from "react-redux";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { cancelCourseBundle } from "../../../Redux/Slices/sripeSliceReducer";
+import { getUserData } from "../../../Redux/Slices/AuthSlice";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 function Profile() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const userData = useSelector((state) => state?.auth?.data);   //since the user details are stored in the redux state when the user logs in
+
+    async function handleCancellation() {
+        
+        await dispatch(cancelCourseBundle());
+        await dispatch(getUserData());
+        
+        navigate("/");
+
+    }
 
    return (
     <HomeLayout>
@@ -42,7 +55,7 @@ function Profile() {
                  </div>
 
                  {userData?.subscription?.status === 'active' && (
-                    <button className="w-full bg-red-600 hover:bg-red-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center">
+                    <button onClick = {handleCancellation} className="w-full bg-red-600 hover:bg-red-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center">
                         Cancel Subscription
                     </button>
                  )}
