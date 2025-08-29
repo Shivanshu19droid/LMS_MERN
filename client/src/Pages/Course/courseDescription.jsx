@@ -9,7 +9,8 @@ function CourseDescription() {
     const navigate = useNavigate();
 
     const { role, data } = useSelector((state) => state.auth); //this role will store - user/ admin and will be used for conditional rendering
-
+    
+    
     return (
        <HomeLayout>
            <div className="min-h-[99vh] pt-12 px-20 flex flex-col items-center justify-center text-white">
