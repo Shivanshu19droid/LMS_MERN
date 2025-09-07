@@ -71,9 +71,9 @@ export const cancelCourseBundle = createAsyncThunk("payments/cancel", async () =
     }
 });
 
-export const getSubscriptionId = createAsyncThunk("payments/getSubscription_id", async() => {
+export const getSubscriptionId = createAsyncThunk("payments/getSubscription_id", async(sessionId) => {
     try{
-        const response = axiosInstance.get("/payments/get-subscription");
+        const response = axiosInstance.get(`/payments/get-subscription?session_id=${sessionId}`);
         toast.promise(response, {
             loading: "Processing your request",
             success: "Subscription Active",

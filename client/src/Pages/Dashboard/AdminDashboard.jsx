@@ -40,6 +40,8 @@ function AdminDashboard() {
   const { allPayments, finalMonths, monthlySalesRecord } = useSelector(
     (state) => state.stripe
   );
+  const {courseData} = useSelector((state) => state.course);
+  console.log(courseData);
 
   //we prepare the data to be displayed in the graphs
   const userData = {
@@ -176,57 +178,60 @@ function AdminDashboard() {
 
           <table className="table overflow-x-scroll">
             <thead>
-                <tr>
-                    <th>S No</th>
-                    <th>Course Title</th>
-                    <th>Course Category</th>
-                    <th>Instructor</th>
-                    <th>Total Lectures</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
+              <tr>
+                <th>S No</th>
+                <th>Course Title</th>
+                <th>Course Category</th>
+                <th>Instructor</th>
+                <th>Total Lectures</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
             </thead>
             <tbody>
-                {myCourses?.map((course, idx) => {
-                    return (
-                        <tr key={course._id}>
-                            <td>idx+1</td>
-                            <td>
-                                <textarea readOnly value={course?.title} className="w-40 h-auto bg-transparent resize-none"></textarea>
-                            </td>
-                            <td>
-                                {course?.category}
-                            </td>
-                            <td>
-                                {course?.createdBy}
-                            </td>
-                            <td>
-                                {course?.numberOfLectures}
-                            </td>
-                            <td className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap">
-                                <textarea
-                                    value={course?.decription}
-                                    readOnly
-                                    className="w-80 h-auto bg-transparent resize-none">
-                                </textarea>
+              {courseData?.map((course, idx) => {
+                return (
+                  <tr key={course._id}>
+                    <td>idx+1</td>
+                    <td>
+                      <textarea
+                        readOnly
+                        value={course?.title}
+                        className="w-40 h-auto bg-transparent resize-none"
+                      ></textarea>
+                    </td>
+                    <td>{course?.category}</td>
+                    <td>{course?.createdBy}</td>
+                    <td>{course?.numberOfLectures}</td>
+                    <td className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap">
+                      <textarea
+                        value={course?.decription}
+                        readOnly
+                        className="w-80 h-auto bg-transparent resize-none"
+                      ></textarea>
+                    </td>
+                    <td className="flex items-center gap-4">
+                      <button
+                        className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
+                        onClick={() =>
+                          navigate("/course/displaylectures", {
+                            state: { ...course },
+                          })
+                        }
+                      >
+                        <BsCollectionPlayFill />
+                      </button>
 
-                            </td>
-                            <td className="flex items-center gap-4">
-                                <button
-                                className="bg-green-500 hover:bg-green-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
-                                onClick={() => navigate("/course/displaylectures", {state: {...course}})}>
-                                    <BsCollectionPlayFill />        
-                                </button>
-
-                                <button
-                                className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
-                                onClick={() => onCourseDelete(course?._id)}>
-                                    <BsTrash />        
-                                </button>
-                            </td>
-                        </tr>
-                    )
-                })}
+                      <button
+                        className="bg-red-500 hover:bg-red-600 transition-all ease-in-out duration-300 text-xl py-2 px-4 rounded-md font-bold"
+                        onClick={() => onCourseDelete(course?._id)}
+                      >
+                        <BsTrash />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

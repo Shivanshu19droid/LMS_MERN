@@ -14,11 +14,17 @@ function Profile() {
     const userData = useSelector((state) => state?.auth?.data);   //since the user details are stored in the redux state when the user logs in
 
     async function handleCancellation() {
+
         
-        await dispatch(cancelCourseBundle());
-        await dispatch(getUserData());
+        const confirmCancel = window.confirm("⚠️ Are you sure you want to cancel your subscription?");
         
-        navigate("/");
+        if(confirmCancel){
+
+            await dispatch(cancelCourseBundle());
+            await dispatch(getUserData());
+            
+            navigate("/");
+        }
 
     }
 

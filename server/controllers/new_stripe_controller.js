@@ -48,6 +48,7 @@ const buySubscription = async (req, res, next) => {
     console.log(session);
 
     const session_id =  session.id;
+    console.log("session id in purchase course :", session_id);
     user.stripeSessionId = session_id;
     await user.save();
 
@@ -63,10 +64,11 @@ const buySubscription = async (req, res, next) => {
 // controller/stripe.js
 const getSubscription = async (req, res, next) => {
   try {
-    const { session_id } = req.params;
-    console.log(session_id);
+    const { session_id } = req.query;
+    console.log("session id :", session_id);
     const { id } = req.user; 
     const user = await User.findById(id);
+    
 
     if (!user || !session_id) {
       return next(new AppError("No session found for user", 400));
@@ -112,10 +114,10 @@ const cancelSubscription = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
     const subscriptionId = user.subscription.id;
-    //console.log(subscriptionId);
+    console.log(subscriptionId);
     const canceled = await stripe.subscriptions.cancel(subscriptionId);
 
-    user.subscription.id = undefined;
+    user.subscription.id = null;
     user.subscription.status = "inactive";
     await user.save();
 

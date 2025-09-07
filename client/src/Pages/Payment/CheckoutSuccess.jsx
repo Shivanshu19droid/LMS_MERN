@@ -5,15 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getSubscriptionId } from "../../../Redux/Slices/sripeSliceReducer";
 import { getUserData } from "../../../Redux/Slices/AuthSlice";
+import { useSearchParams } from "react-router-dom";
 
 function CheckoutSuccess() {
 
     const dispatch = useDispatch();
     const {susbcriptionId, isPaymentVerified} = useSelector((state) => state.stripe);
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        dispatch(getSubscriptionId());
-        dispatch(getUserData());
+        const sessionId = searchParams.get("session_id");
+        console.log(sessionId);
+        dispatch(getSubscriptionId(sessionId)).then(()=>dispatch(getUserData()));
+        //dispatch(getUserData());
     }, [dispatch]);
 
 
