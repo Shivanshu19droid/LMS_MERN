@@ -36,12 +36,11 @@ function AdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUsersCount, subscribedCount } = useSelector((state) => state.stat);
+  const { allUserCount, subscribedCount } = useSelector((state) => state.stat);
   const { allPayments, finalMonths, monthlySalesRecord } = useSelector(
     (state) => state.stripe
   );
   const {courseData} = useSelector((state) => state.course);
-  console.log(courseData);
 
   //we prepare the data to be displayed in the graphs
   const userData = {
@@ -49,7 +48,7 @@ function AdminDashboard() {
     datasets: [
       {
         label: "User Details",
-        data: [80, 20],
+        data: [allUserCount, subscribedCount],
         backgroundColor: ["yellow", "green"],
         borderWidth: 1,
         borderColor: ["yellow", "green"],

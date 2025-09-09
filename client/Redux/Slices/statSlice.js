@@ -18,6 +18,7 @@ export const getStatsData = createAsyncThunk("stats/get", async () => {
         },
         error: "Failed to load data stats"
       });
+      return (await response).data;
     } catch(error){
         toast.error(error?.message);
     }
@@ -30,7 +31,7 @@ const statSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getStatsData.fulfilled, (state, action)=> {
-            state.allUserCount = action?.payload?.allUserCount;
+            state.allUserCount = action?.payload?.allUsersCount;
             state.subscribedCount = action?.payload?.subscribedUsersCount;
         })
     }
