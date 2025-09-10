@@ -1,5 +1,6 @@
 import AppError from "../utils/error.util.js";
 import jwt from 'jsonwebtoken';
+import User from "../models/user.model.js";
 
 const isLoggedIn = async (req, res, next) => {
     const {token} = req.cookies;
@@ -31,8 +32,12 @@ const authorizedRoles = (...roles) => async(req, res, next) => {
 
 //we define a middleware which prevents the users with no subscription from accessing the course lectures, i.e. the course lectures will be accessible only by the admin and the users with subscription
 const authorizedSubscriber = async(req, res, next) => {
-    const subscription = req.user.subscription;
-    const currentUserRole = req.user.role;
+
+    const {id} = req.user;
+    const user = await User.findById(id);
+
+    const subscription = user.subscription;
+    const currentUserRole = user.role;
 
     if(currentUserRole !== 'ADMIN' && subscription.status !== 'active'){
         return next(
