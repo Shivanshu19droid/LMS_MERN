@@ -4,7 +4,8 @@ import {
   buySubscription,
   cancelSubscription,
   allPayments,
-  getSubscription
+  getSubscription,
+  getMonthlyPayments
 } from "../controllers/new_stripe_controller.js";
 import { isLoggedIn } from "../middlewares/auth.middleware.js";
 import { authorizedRoles } from "../middlewares/auth.middleware.js";
@@ -27,5 +28,8 @@ paymentRoutes.route("/unsubscribe").get(isLoggedIn, cancelSubscription);
 paymentRoutes //this route is to show all the payment details and will be accessible to the admin only
   .route("/")
   .get(isLoggedIn, authorizedRoles('ADMIN'), allPayments);
+
+paymentRoutes.route("/get-monthly-payments").get(isLoggedIn, authorizedRoles('ADMIN'), getMonthlyPayments);
+
 
 export default paymentRoutes;

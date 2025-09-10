@@ -142,11 +142,49 @@ const allPayments = async (req, res, next) => {
   }
 };
 
+//gettign the monthly payment recrods
+const getMonthlyPayments = async(req, res, next) => {
+    try{
+
+      console.log("backend function called");
+
+       const year = new Date().getFullYear();
+       let month;
+
+       const monthlyList = [];
+
+       for (month = 0; month < 12; month ++){
+        
+        //first we define the month using a start date and end date
+        const startDate = Math.floor(new Date(year, month, 1).getTime() / 1000);
+        const endDate = Math.floor(new Date(year, month + 1, 1).getTime() / 1000);
+
+        //fetch the monthly invoices
+        const invoices = await stripe.invoices.list({
+        created: { gte: startDate, lt: endDate }// paginate if needed
+        });
+
+
+        //pushing the monthly numbers in the array
+        monthlyList.push(invoices?.data?.length || 0); 
+       }
+
+       res.status(200).json({
+        message: "Monthly purchase records fetched successfully",
+        success: true,
+        data: monthlyList
+       })
+    } catch(error) {
+        return next(new AppError(error.message, 500));
+    }
+  }
+
 export{
     getStripeApiKey,
     buySubscription,
     cancelSubscription,
     allPayments,
-    getSubscription
+    getSubscription,
+    getMonthlyPayments
 }
 

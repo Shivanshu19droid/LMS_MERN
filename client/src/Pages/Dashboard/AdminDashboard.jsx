@@ -14,7 +14,7 @@ import { deleteCourse, getAllCourses } from "../../../Redux/Slices/CourseSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getStatsData } from "../../../Redux/Slices/statSlice";
+import { getMonthlyPurchaseData, getStatsData } from "../../../Redux/Slices/statSlice";
 import { getPaymentRecord } from "../../../Redux/Slices/sripeSliceReducer";
 import { Pie, Bar } from "react-chartjs-2";
 import { FaUsers } from "react-icons/fa";
@@ -36,11 +36,12 @@ function AdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUserCount, subscribedCount } = useSelector((state) => state.stat);
+  const { allUserCount, subscribedCount, monthlyPurchaseRecord } = useSelector((state) => state.stat);
   const { allPayments, finalMonths, monthlySalesRecord } = useSelector(
     (state) => state.stripe
   );
   const {courseData} = useSelector((state) => state.course);
+  console.log(monthlyPurchaseRecord);
 
   //we prepare the data to be displayed in the graphs
   const userData = {
@@ -75,7 +76,7 @@ function AdminDashboard() {
     datasets: [
       {
         label: "Sales/Month",
-        data: monthlySalesRecord,
+        data: monthlyPurchaseRecord,
         backgroundColor: ["rgb(225, 99, 32)"],
         borderColor: ["white"],
         borderWidth: 2,
@@ -96,7 +97,8 @@ function AdminDashboard() {
     (async () => {
       await dispatch(getAllCourses());
       await dispatch(getStatsData());
-      await dispatch(getPaymentRecord());
+      await dispatch(getMonthlyPurchaseData());
+      //await dispatch(getPaymentRecord());
     })();
   }, []);
 
@@ -117,7 +119,7 @@ function AdminDashboard() {
               <div className="flex  items-center justify-between p-5 gap-5 rounded-md shadow-md">
                 <div className="flex flex-col items-center">
                   <p className="font-semibold">Registered Users</p>
-                  <h3 className="text-4xl font-bold">80</h3>
+                  <h3 className="text-4xl font-bold">{allUserCount}</h3>
                 </div>
                 <FaUsers className="text-yellow-500 text-5xl" />
               </div>
@@ -125,7 +127,7 @@ function AdminDashboard() {
               <div className="flex  items-center justify-between p-5 gap-5 rounded-md shadow-md">
                 <div className="flex flex-col items-center">
                   <p className="font-semibold">Subscribed Users</p>
-                  <h3 className="text-4xl font-bold">20</h3>
+                  <h3 className="text-4xl font-bold">{subscribedCount}</h3>
                 </div>
                 <FaUsers className="text-green-500 text-5xl" />
               </div>
@@ -141,7 +143,7 @@ function AdminDashboard() {
               <div className="flex  items-center justify-between p-5 gap-5 rounded-md shadow-md">
                 <div className="flex flex-col items-center">
                   <p className="font-semibold">Subscription Count</p>
-                  <h3 className="text-4xl font-bold">{allPayments?.count}</h3>
+                  <h3 className="text-4xl font-bold">{subscribedCount}</h3>
                 </div>
                 <FcSalesPerformance className="text-yellow-500 text-5xl" />
               </div>
@@ -150,7 +152,7 @@ function AdminDashboard() {
                 <div className="flex flex-col items-center">
                   <p className="font-semibold">Total Revenue</p>
                   <h3 className="text-4xl font-bold">
-                    {allPayments?.count * 499}
+                    {subscribedCount * 499}
                   </h3>
                 </div>
                 <GiMoneyStack className="text-green-500 text-5xl" />

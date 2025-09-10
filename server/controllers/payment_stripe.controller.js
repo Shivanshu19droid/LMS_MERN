@@ -195,31 +195,6 @@ const createCheckoutSession = async (req, res, next) => {
   }
 };
 
-const getMonthlyPayments = async(req, res, next) => {
-    try{
-
-       const {year} = req.query;
-
-       const monthlyList = {};
-
-       for (month = 0; month < 12; month ++){
-        
-        //first we define the month using a start date and end date
-        const startDate = Math.floor(new Date(year, month, 1).getTime() / 1000);
-        const endDate = Math.floor(new Date(year, month + 1, 1).getTime() / 1000);
-
-        //fetch the monthly invoices
-        const invoices = await stripe.invoices.list({
-        created: { gte: startDate, lt: endDate }// paginate if needed
-
-        //pushing the monthly numbers in the array
-        monthlyList[month + 1] = invoices?.data?.length
-    }); 
-       }
-    } catch(error) {
-        return next(new AppError(error.message, 500));
-    }
-}
 
 export{
     getStripeApiKey,
@@ -227,7 +202,7 @@ export{
     verifySubscription,
     cancelSubscription,
     allPayments,
-    createCheckoutSession
+    createCheckoutSession,
 }
 
 
