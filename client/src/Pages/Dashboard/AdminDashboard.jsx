@@ -193,7 +193,7 @@ function AdminDashboard() {
               {courseData?.map((course, idx) => {
                 return (
                   <tr key={course._id}>
-                    <td>idx+1</td>
+                    <td>{idx+1}</td>
                     <td>
                       <textarea
                         readOnly

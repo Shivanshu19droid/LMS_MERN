@@ -17,7 +17,7 @@ function AboutUs() {
             <p className="text-xl text-gray-200">
               Our goal is to provide affordable and quality education to all
               students. We believe that every student deserves quality education
-              regaardless of their financial background.
+              regardless of their financial background.
             </p>
           </section>
 
@@ -29,7 +29,7 @@ function AboutUs() {
               }}
               alt="about-main-image"
               className="drop-shadow-2xl"
-              src="src/assets/tree.avif"
+              src="src/assets/tree-2.png"
             />
           </div>
         </div>
