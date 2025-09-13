@@ -41,7 +41,7 @@ const authorizedSubscriber = async(req, res, next) => {
 
     if(currentUserRole !== 'ADMIN' && subscription.status !== 'active'){
         return next(
-            new AppError('Please subscribe to access this route', 400)
+            new AppError('Please subscribe to access the lectures', 400)
         )
     }
 

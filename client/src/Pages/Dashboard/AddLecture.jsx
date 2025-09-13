@@ -7,6 +7,7 @@ import { addCourseLecture } from "../../../Redux/Slices/LectureSlice";
 import { useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import toast from "react-hot-toast";
+import { getCourseLectures } from "../../../Redux/Slices/LectureSlice";
 
 function AddLecture() {
 
@@ -59,6 +60,7 @@ function AddLecture() {
                 videoSrc: ""
             })
             navigate(-1);
+            dispatch(getCourseLectures(courseDetails._id));
         }
     }
 

@@ -21,12 +21,12 @@ function Displaylectures() {
     await dispatch(getCourseLectures(courseId));
   }
 
-  useEffect(() => {
-    if (!state) navigate("/courses");
-    dispatch(getCourseLectures(state._id));
-    console.log(state);
-    //console.log(lectures);
-  }, []);
+  // useEffect(() => {
+  //   if (!state) navigate("/courses");
+  //   dispatch(getCourseLectures(state._id));
+  //   console.log(state);
+  //   //console.log(lectures);
+  // }, []);
   return (
     <HomeLayout>
       <div className="flex flex-col gap-10 items-center justify-center min-h-[90vh] py-10 text-white mx-5%">
