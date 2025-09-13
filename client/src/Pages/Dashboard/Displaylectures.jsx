@@ -25,6 +25,7 @@ function Displaylectures() {
     if (!state) navigate("/courses");
     dispatch(getCourseLectures(state._id));
     console.log(state);
+    //console.log(lectures);
   }, []);
   return (
     <HomeLayout>

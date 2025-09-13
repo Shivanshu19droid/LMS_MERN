@@ -2,13 +2,29 @@ import { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { useSelector } from "react-redux";
+import { getCourseLectures } from "../../../Redux/Slices/LectureSlice";
+import { useDispatch } from "react-redux";
 
 function CourseDescription() {
     
     const { state } = useLocation(); //if we store this in a variable, then the entire object fetched using useLocation() is stored in that variable, so here we directly fetch the state which stores the data of the course we want to display
     const navigate = useNavigate();
+    const {lectures} = useSelector((state) => state.lecture);
+    const dispatch = useDispatch();
 
     const { role, data } = useSelector((state) => state.auth); //this role will store - user/ admin and will be used for conditional rendering
+
+    useEffect(() => {
+        if(state._id){
+            dispatch(getCourseLectures(state._id));
+        } else {
+            navigate("/courses");
+        }
+    },[state._id, dispatch]);
+
+   
+
+    
     
     
     return (
@@ -29,7 +45,7 @@ function CourseDescription() {
                             <span className="text-yellow-500 font-bold">
                                 Total lectures : {" "}
                             </span>
-                            {state?.numberOfLectures}
+                            {lectures?.length}
                         </p>
 
                         <p className="font-semibold">
@@ -59,7 +75,7 @@ function CourseDescription() {
                 </h1>
 
                 <p className="text-yellow-500">Course Description: </p>
-                <p>{state?.descripion}</p>
+                <p>{state?.description}</p>
 
             </div>
             </div>
