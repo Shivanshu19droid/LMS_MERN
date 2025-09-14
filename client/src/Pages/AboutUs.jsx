@@ -3,9 +3,8 @@ import CarouselSlide from "../Components/CarouselSlide";
 import { celebrities } from "../Constants/CelebrityData";
 
 function AboutUs() {
-
   //making an array of objects to display the content inside the carousel
-  
+
   return (
     <HomeLayout>
       <div className="pl-20 pr-20 flex flex-col text-white">
@@ -37,7 +36,14 @@ function AboutUs() {
         {/* now after the text and image have been added, we will add a carousal here using tehe daisy ui */}
 
         <div className="carousel w-1/2 my-16 m-auto">
-        {celebrities && celebrities.map(celebrity => <CarouselSlide  {...celebrity} key={celebrity.slideNumber} totalSlides={celebrities.length} />)}
+          {celebrities &&
+            celebrities.map((celebrity) => (
+              <CarouselSlide
+                {...celebrity}
+                key={celebrity.slideNumber}
+                totalSlides={celebrities.length}
+              />
+            ))}
         </div>
       </div>
     </HomeLayout>

@@ -3,27 +3,27 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../src/Helpers/axiosInstance";
 
 const initialState = {
-    allUserCount: 0,
-    subscribedCount: 0,
-    monthlyPurchaseRecord: {}
-}
+  allUserCount: 0,
+  subscribedCount: 0,
+  monthlyPurchaseRecord: {},
+};
 
 //async thunks/functions to intreact with the backend
 export const getStatsData = createAsyncThunk("stats/get", async () => {
-    try{
-      const response = axiosInstance.get("/admin/stats/users");
-      toast.promise(response, {
-        loading: "Getting the stats ...",
-        success: (data) => {
-            return data?.data?.message
-        },
-        error: "Failed to load data stats"
-      });
-      return (await response).data;
-    } catch(error){
-        toast.error(error?.message);
-    }
-})
+  try {
+    const response = axiosInstance.get("/admin/stats/users");
+    toast.promise(response, {
+      loading: "Getting the stats ...",
+      success: (data) => {
+        return data?.data?.message;
+      },
+      error: "Failed to load data stats",
+    });
+    return (await response).data;
+  } catch (error) {
+    toast.error(error?.message);
+  }
+});
 
 //function to get the monthly purchase data
 export const getMonthlyPurchaseData = createAsyncThunk(
@@ -49,23 +49,21 @@ export const getMonthlyPurchaseData = createAsyncThunk(
   }
 );
 
-
-
 //reducers
 const statSlice = createSlice({
-    name: "state",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getStatsData.fulfilled, (state, action)=> {
-            state.allUserCount = action?.payload?.allUsersCount;
-            state.subscribedCount = action?.payload?.subscribedUsersCount;
-        })
-        builder.addCase(getMonthlyPurchaseData.fulfilled, (state, action) => {
-            state.monthlyPurchaseRecord = action?.payload?.data;
-            console.log(state.monthlyPurchaseRecord);
-        })
-    }
+  name: "state",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getStatsData.fulfilled, (state, action) => {
+      state.allUserCount = action?.payload?.allUsersCount;
+      state.subscribedCount = action?.payload?.subscribedUsersCount;
+    });
+    builder.addCase(getMonthlyPurchaseData.fulfilled, (state, action) => {
+      state.monthlyPurchaseRecord = action?.payload?.data;
+      console.log(state.monthlyPurchaseRecord);
+    });
+  },
 });
 
 export default statSlice.reducer;

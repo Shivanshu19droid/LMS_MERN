@@ -35,11 +35,6 @@ app.use('/api/v1/payments', paymentRoutes);
 app.use('/api/v1', miscellaneousroutes)
 
 
-
-// app.all('*', (req, res) => {
-//     res.send("OOPS!! 404 not found");
-// })
-
 app.use(errorMiddleware);
 
 export default app;

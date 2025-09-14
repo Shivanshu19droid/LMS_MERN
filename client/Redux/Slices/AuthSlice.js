@@ -21,7 +21,6 @@ export const createAccount = createAsyncThunk('/auth/signup', async(data) => {
         },
         error: 'Failed to create account'
        })
-       //console.log(res.data);
        return res.data;
     } catch(error){
         toast.error(error?.response?.data?.message);
@@ -39,7 +38,6 @@ export const login = createAsyncThunk('/auth/login', async(data) => {
         },
         error: 'Failed to log in'
        })
-       //console.log(res.data);
        return res.data;
     } catch(error){
         toast.error(error?.response?.data?.message);

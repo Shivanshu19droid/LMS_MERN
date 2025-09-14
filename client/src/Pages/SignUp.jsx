@@ -105,7 +105,6 @@ function SignUp() {
 
     //dispatch account create action
     const response = await dispatch(createAccount(formData));
-    //console.log(response?.payload);
     if (response?.payload?.success) navigate("/");
 
     setSignupData({

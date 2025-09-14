@@ -1,7 +1,7 @@
-import asyncHandler from '../middlewares/asyncHandler.middleware.js';
-import User from '../models/user.model.js';
-import AppError from '../utils/error.util.js';
-import sendEmail from '../utils/email.util.js';
+import asyncHandler from "../middlewares/asyncHandler.middleware.js";
+import User from "../models/user.model.js";
+import AppError from "../utils/error.util.js";
+import sendEmail from "../utils/email.util.js";
 
 /**
  * @CONTACT_US
@@ -14,11 +14,11 @@ export const contactUs = asyncHandler(async (req, res, next) => {
 
   // Checking if values are valid
   if (!name || !email || !message) {
-    return next(new AppError('Name, Email, Message are required'));
+    return next(new AppError("Name, Email, Message are required"));
   }
 
   try {
-    const subject = 'Contact Us Form';
+    const subject = "Contact Us Form";
     const textMessage = `${name} - ${email} <br /> ${message}`;
 
     // Await the send email
@@ -30,7 +30,7 @@ export const contactUs = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: 'Your request has been submitted successfully',
+    message: "Your request has been submitted successfully",
   });
 });
 
@@ -43,12 +43,12 @@ export const userStats = asyncHandler(async (req, res, next) => {
   const allUsersCount = await User.countDocuments();
 
   const subscribedUsersCount = await User.countDocuments({
-    'subscription.status': 'active', // subscription.status means we are going inside an object and we have to put this in quotes
+    "subscription.status": "active", // subscription.status means we are going inside an object and we have to put this in quotes
   });
 
   res.status(200).json({
     success: true,
-    message: 'All registered users count',
+    message: "All registered users count",
     allUsersCount,
     subscribedUsersCount,
   });

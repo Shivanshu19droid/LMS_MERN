@@ -27,17 +27,13 @@ function LogIn() {
   async function onLogin(event) {
     event.preventDefault();
 
-    if (
-      !loginData.email ||
-      !loginData.password
-    ) {
+    if (!loginData.email || !loginData.password) {
       toast.error("Please fill all the details");
       return;
     }
 
     //dispatch login action
     const response = await dispatch(login(loginData));
-    //console.log(response?.payload);
     if (response?.payload?.success) navigate("/");
 
     setLoginData({
@@ -45,7 +41,6 @@ function LogIn() {
       password: "",
     });
   }
-
 
   return (
     <HomeLayout>

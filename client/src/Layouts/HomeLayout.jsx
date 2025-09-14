@@ -1,7 +1,3 @@
-//this is a layout which will contain a navbar and the footer, and all the other pages will be passed inside it as children
-//so thsi layout will accept a children prop which will be the content of the page
-
-//creating the layout which first has the navbar, then the children item/page and then the footer
 import { FiMenu } from "react-icons/fi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";

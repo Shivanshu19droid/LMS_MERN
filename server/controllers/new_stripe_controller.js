@@ -7,34 +7,34 @@ import { config } from "dotenv";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 //funcion to send the stripe api key to the front end
-const getStripeApiKey = async(req, res, next) => {
-    res.status(200).json({
-        success: true,
-        message: "Stripe publishable key",
-        key: process.env.STRIPE_PUBLISHABLE_KEY
-    });
-}
+const getStripeApiKey = async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    message: "Stripe publishable key",
+    key: process.env.STRIPE_PUBLISHABLE_KEY,
+  });
+};
 
 //function to create a check out session when buy now button is clicked
 
 const buySubscription = async (req, res, next) => {
   try {
-    const priceId = process.env.STRIPE_PRICE_ID;   // you already have this ID stored in Stripe
-    const {id} = req.user;
-    const user = await User.findById(id);          // assuming you have authentication middleware
+    const priceId = process.env.STRIPE_PRICE_ID; // you already have this ID stored in Stripe
+    const { id } = req.user;
+    const user = await User.findById(id); // assuming you have authentication middleware
 
-    if(!user){
-        return next(new AppError("Unauthorised! Please Login", 401));
+    if (!user) {
+      return next(new AppError("Unauthorised! Please Login", 401));
     }
 
-    if(user.role === 'ADMIN'){
-        return next(new AppError("Admin cannot purchase a subscription", 403));
+    if (user.role === "ADMIN") {
+      return next(new AppError("Admin cannot purchase a subscription", 403));
     }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
-      customer_email: user.email,   // or map to stripe customer if you store IDs
+      customer_email: user.email, // or map to stripe customer if you store IDs
       line_items: [
         {
           price: priceId, // recurring priceId from Stripe dashboard
@@ -47,14 +47,21 @@ const buySubscription = async (req, res, next) => {
 
     console.log(session);
 
-    const session_id =  session.id;
+    const session_id = session.id;
     console.log("session id in purchase course :", session_id);
     user.stripeSessionId = session_id;
     await user.save();
 
     //console.log(user);
 
-    res.status(200).json({ success: true, url: session.url, session_id: session.id, subscriptionId: session.subscription });
+    res
+      .status(200)
+      .json({
+        success: true,
+        url: session.url,
+        session_id: session.id,
+        subscriptionId: session.subscription,
+      });
   } catch (error) {
     return next(new AppError(error.message, 500));
   }
@@ -66,9 +73,8 @@ const getSubscription = async (req, res, next) => {
   try {
     const { session_id } = req.query;
     console.log("session id :", session_id);
-    const { id } = req.user; 
+    const { id } = req.user;
     const user = await User.findById(id);
-    
 
     if (!user || !session_id) {
       return next(new AppError("No session found for user", 400));
@@ -102,12 +108,10 @@ const getSubscription = async (req, res, next) => {
       subscriptionId,
       subscription,
     });
-
   } catch (err) {
     return next(new AppError(err.message, 500));
   }
 };
-
 
 //cancelling the subscription
 const cancelSubscription = async (req, res, next) => {
@@ -127,64 +131,44 @@ const cancelSubscription = async (req, res, next) => {
   }
 };
 
-//listing all payments
-const allPayments = async (req, res, next) => {
+//gettign the monthly payment recrods
+const getMonthlyPayments = async (req, res, next) => {
   try {
-    const { customerId } = req.query;
-    const invoices = await stripe.invoices.list({
-      customer: customerId,
-      limit: 10,
-    });
+    console.log("backend function called");
 
-    res.status(200).json({ success: true, invoices: invoices.data });
+    const year = new Date().getFullYear();
+    let month;
+
+    const monthlyList = [];
+
+    for (month = 0; month < 12; month++) {
+      //first we define the month using a start date and end date
+      const startDate = Math.floor(new Date(year, month, 1).getTime() / 1000);
+      const endDate = Math.floor(new Date(year, month + 1, 1).getTime() / 1000);
+
+      //fetch the monthly invoices
+      const invoices = await stripe.invoices.list({
+        created: { gte: startDate, lt: endDate }, // paginate if needed
+      });
+
+      //pushing the monthly numbers in the array
+      monthlyList.push(invoices?.data?.length || 0);
+    }
+
+    res.status(200).json({
+      message: "Monthly purchase records fetched successfully",
+      success: true,
+      data: monthlyList,
+    });
   } catch (error) {
     return next(new AppError(error.message, 500));
   }
 };
 
-//gettign the monthly payment recrods
-const getMonthlyPayments = async(req, res, next) => {
-    try{
-
-      console.log("backend function called");
-
-       const year = new Date().getFullYear();
-       let month;
-
-       const monthlyList = [];
-
-       for (month = 0; month < 12; month ++){
-        
-        //first we define the month using a start date and end date
-        const startDate = Math.floor(new Date(year, month, 1).getTime() / 1000);
-        const endDate = Math.floor(new Date(year, month + 1, 1).getTime() / 1000);
-
-        //fetch the monthly invoices
-        const invoices = await stripe.invoices.list({
-        created: { gte: startDate, lt: endDate }// paginate if needed
-        });
-
-
-        //pushing the monthly numbers in the array
-        monthlyList.push(invoices?.data?.length || 0); 
-       }
-
-       res.status(200).json({
-        message: "Monthly purchase records fetched successfully",
-        success: true,
-        data: monthlyList
-       })
-    } catch(error) {
-        return next(new AppError(error.message, 500));
-    }
-  }
-
-export{
-    getStripeApiKey,
-    buySubscription,
-    cancelSubscription,
-    allPayments,
-    getSubscription,
-    getMonthlyPayments
-}
-
+export {
+  getStripeApiKey,
+  buySubscription,
+  cancelSubscription,
+  getSubscription,
+  getMonthlyPayments,
+};

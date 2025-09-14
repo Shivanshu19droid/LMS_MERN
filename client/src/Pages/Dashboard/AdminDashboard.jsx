@@ -14,7 +14,10 @@ import { deleteCourse, getAllCourses } from "../../../Redux/Slices/CourseSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getMonthlyPurchaseData, getStatsData } from "../../../Redux/Slices/statSlice";
+import {
+  getMonthlyPurchaseData,
+  getStatsData,
+} from "../../../Redux/Slices/statSlice";
 import { getPaymentRecord } from "../../../Redux/Slices/sripeSliceReducer";
 import { Pie, Bar } from "react-chartjs-2";
 import { FaUsers } from "react-icons/fa";
@@ -36,12 +39,13 @@ function AdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { allUserCount, subscribedCount, monthlyPurchaseRecord } = useSelector((state) => state.stat);
+  const { allUserCount, subscribedCount, monthlyPurchaseRecord } = useSelector(
+    (state) => state.stat
+  );
   const { allPayments, finalMonths, monthlySalesRecord } = useSelector(
     (state) => state.stripe
   );
-  const {courseData} = useSelector((state) => state.course);
-  console.log(monthlyPurchaseRecord);
+  const { courseData } = useSelector((state) => state.course);
 
   //we prepare the data to be displayed in the graphs
   const userData = {
@@ -98,7 +102,6 @@ function AdminDashboard() {
       await dispatch(getAllCourses());
       await dispatch(getStatsData());
       await dispatch(getMonthlyPurchaseData());
-      //await dispatch(getPaymentRecord());
     })();
   }, []);
 
@@ -193,7 +196,7 @@ function AdminDashboard() {
               {courseData?.map((course, idx) => {
                 return (
                   <tr key={course._id}>
-                    <td>{idx+1}</td>
+                    <td>{idx + 1}</td>
                     <td>
                       <textarea
                         readOnly
