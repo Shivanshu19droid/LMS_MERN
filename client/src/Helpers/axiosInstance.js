@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const BASE_URL = "https://full-stack-learning-management-system-tgou.onrender.com"; //this is the server url and the env variable can also be used here
+const BASE_URL = "https://full-stack-learning-management-system-tgou.onrender.com/api/v1" || "http://localhost:5014/api/v1"; //this is the server url and the env variable can also be used here
 
 const axiosInstance = axios.create();
 
