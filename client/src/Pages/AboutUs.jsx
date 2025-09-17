@@ -1,6 +1,8 @@
 import HomeLayout from "../Layouts/HomeLayout";
 import CarouselSlide from "../Components/CarouselSlide";
 import { celebrities } from "../Constants/CelebrityData";
+import TreeImage  from "../assets/tree-2.png";
+
 
 function AboutUs() {
   //making an array of objects to display the content inside the carousel
@@ -28,7 +30,7 @@ function AboutUs() {
               }}
               alt="about-main-image"
               className="drop-shadow-2xl"
-              src="../assets/tree-2.png"
+              src={TreeImage}
             />
           </div>
         </div>
