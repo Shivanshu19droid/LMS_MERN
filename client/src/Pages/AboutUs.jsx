@@ -28,7 +28,7 @@ function AboutUs() {
               }}
               alt="about-main-image"
               className="drop-shadow-2xl"
-              src="src/assets/tree-2.png"
+              src="../assets/tree-2.png"
             />
           </div>
         </div>
