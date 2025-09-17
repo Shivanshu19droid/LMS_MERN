@@ -2,6 +2,7 @@ import AppError from "../utils/error.util.js";
 import User from "../models/user.model.js";
 import Stripe from "stripe";
 import { config } from "dotenv";
+config();
 
 //first we have to initialise with our secret key on the backend
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
