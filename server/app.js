@@ -16,9 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true})); //used to decode the token which is passed in the url
 
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: "https://lms-mern-aql1.onrender.com",
     credentials: true
 }))
+
 
 app.use(cookieParser()) ;
 
