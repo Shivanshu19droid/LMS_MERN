@@ -19,6 +19,20 @@ export const stripe = new Stripe({
   publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
 });
 
+// ✅ Serve React build
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// If your React is inside /client
+import { fileURLToPath } from "url";
+import path from "path";
+
+app.use(express.static(path.join(__dirname, "client", "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+});
+
 app.listen(PORT, async () => {
   await connectionToDB();
   console.log(`App is running at http://localhost:${PORT}`);
