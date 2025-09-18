@@ -5,6 +5,14 @@ import cloudinary from "cloudinary";
 import { config } from "dotenv";
 config();
 import Stripe from "stripe";
+import express from "express";
+
+import { fileURLToPath } from "url";
+import path from "path";
+
+
+
+
 
 //cloudinary configuration
 cloudinary.v2.config({
@@ -14,22 +22,18 @@ cloudinary.v2.config({
 });
 
 //stripe configuration
-export const stripe = new Stripe({
-  secret_key: process.env.STRIPE_SECRET_KEY,
-  publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
-});
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // ✅ Serve React build
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // If your React is inside /client
-import { fileURLToPath } from "url";
-import path from "path";
+
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
 });
 
