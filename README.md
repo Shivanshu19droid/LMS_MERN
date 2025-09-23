@@ -115,7 +115,7 @@ npm start
 ### 🔐 Authentication
 ![Login](./Screenshots/Authentication/login.png)
 ![Signup](./Screenshots/Authentication/signup.png)
-![Access Restricted](./Screenshots/Authentication/lectures_access_restricted.png)
+![Access Restricted](./Screenshots/Authentication/lectures_access_denied.png)
 
 ### 🎓 Course Management
 ![Course List](./Screenshots/Course_management/courseList.png)
@@ -124,7 +124,7 @@ npm start
 
 ### 📺 Lecture Management
 ![Add Lecture](./Screenshots/Lecture_management/addLecture.png)
-![Lecture Access](./Screenshots/Authentication/lectures_access.png)
+![Lecture Access](./Screenshots/Authentication/lectures_access_allowed.png)
 
 ### 👤 User Profile
 ![Profile](./Screenshots/User_profile/profile.png)
@@ -133,13 +133,13 @@ npm start
 ### 💳 Subscription & Payments
 ![Buy Subscription](./Screenshots/Subscription/buySubscription.png)
 ![Stripe Gateway](./Screenshots/Subscription/StripeGateway.png)
-![Active Subscription](./Screenshots/Subscription/subscription_active.png)
-![Subscription Success](./Screenshots/Subscription/subscription_success.png)
+![Subscription Success](./Screenshots/Subscription/subscription_Successful.png)
 ![Cancel Subscription](./Screenshots/Subscription/cancel_subscription.png)
+![Subscription Cancelled](./Screenshots/Subscription/subscription_cancelled.png)
 
 ### 📊 Admin Dashboard
 ![Dashboard Overview](./Screenshots/Admin_dashboard/Dashboard_overview.png)
-![Course Management](./Screenshots/Admin_dashboard/Course_management.png)
+![Course Management](./Screenshots/Admin_dashboard/Course_management_panel.png)
 
 ### ❌ Error / Not Found
 ![404 Page](./Screenshots/others/page_not_found.png)
