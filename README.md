@@ -6,7 +6,7 @@ This platform enables smooth online learning with course subscriptions, lecture 
 ---
 
 ## 🔗 Live Demo
-👉 [Live Demo Here](https://your-deployed-link.com) *(replace with your deployed link)*
+👉 [https://lms-mern-aql1.onrender.com/]
 
 ---
 
@@ -41,7 +41,7 @@ This platform enables smooth online learning with course subscriptions, lecture 
 - **Database:** MongoDB (Mongoose ORM)  
 - **Authentication:** JWT, bcrypt  
 - **Payments:** Stripe API  
-- **Deployment:** Vercel (Frontend), Render/Heroku (Backend), MongoDB Atlas  
+- **Deployment:** Render( FrontEnd + Backend ), MongoDB Atlas  
 
 ---
 
@@ -135,7 +135,7 @@ npm start
 ![Stripe Gateway](./Screenshots/Subscription/StripeGateway.png)
 ![Subscription Success](./Screenshots/Subscription/subscription_Successful.png)
 ![Cancel Subscription](./Screenshots/Subscription/cancel_subscription.png)
-![Subscription Cancelled](./Screenshots/Subscription/subscription_cancelled.png)
+![Subscription Cancelled](./Screenshots/Subscription/Subscription_cancelled.png)
 
 ### 📊 Admin Dashboard
 ![Dashboard Overview](./Screenshots/Admin_dashboard/Dashboard_overview.png)
