@@ -10,6 +10,18 @@ This platform enables smooth online learning with course subscriptions, lecture 
 
 ---
 
+## 🧪 Demo Login Credentials
+
+You can use the following demo account to explore subscriber features without creating a new account:
+
+### 👤 Subscriber Account
+- **Email:** testuser1@gmail.com  
+- **Password:** password@123  
+
+> ⚠️ This is a test account. Please do not change the password.
+
+---
+
 ## ✨ Features
 
 - 🔑 **Authentication & Security**
