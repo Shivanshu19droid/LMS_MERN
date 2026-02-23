@@ -11,6 +11,7 @@ const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000, //7days
   httpOnly: true,
   secure: true,
+  sameSite: "none"
 };
 
 const register = async (req, res, next) => {
@@ -124,6 +125,7 @@ const logout = (req, res) => {
     secure: true,
     maxAge: 0,
     httpOnly: true,
+    sameSite: "none"
   });
 
   res.status(200).json({
