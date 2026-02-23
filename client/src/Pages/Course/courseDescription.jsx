@@ -21,65 +21,85 @@ function CourseDescription() {
   }, [state._id, dispatch]);
 
   return (
-    <HomeLayout>
-      <div className="min-h-[99vh] pt-12 px-20 flex flex-col items-center justify-center text-white">
-        <div className="grid grid-cols-2 gap-10 py-10 relative">
-          <div className="space-y-5">
-            <img
-              className="w-full h-64"
-              alt="thumbnail"
-              src={state?.thumbnail?.secure_url}
-            />
+  <HomeLayout>
+    <div className="min-h-[90vh] bg-[#F8FAFC] px-4 sm:px-6 lg:px-10 py-12">
 
-            <div className="space-y-4">
-              <div className="flex flex-col items-center justify-between tex-xl">
-                <p className="font-semibold">
-                  <span className="text-yellow-500 font-bold">
-                    Total lectures :{" "}
-                  </span>
-                  {lectures?.length}
-                </p>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-                <p className="font-semibold">
-                  <span className="text-yellow-500 font-bold">
-                    Instructor :{" "}
-                  </span>
-                  {state?.createdBy}
-                </p>
-              </div>
+        {/* ================= LEFT SECTION ================= */}
+        <div className="space-y-6">
 
-              {role === "ADMIN" || data?.subscription?.status === "active" ? (
-                <button
-                  onClick={() =>
-                    navigate("/course/displaylecture", { state: { ...state } })
-                  }
-                  className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300"
-                >
-                  Watch Lectures
-                </button>
-              ) : (
-                <button
-                  onClick={() => navigate("/checkout")}
-                  className="bg-yellow-600 text-xl rounded-md font-bold px-5 w-full hover:bg-yellow-500 transition-all ease-in-out duration-300"
-                >
-                  Subscribe
-                </button>
-              )}
+          <img
+            src={state?.thumbnail?.secure_url}
+            alt="Course Thumbnail"
+            className="w-full h-64 sm:h-72 object-cover rounded-2xl shadow-sm"
+          />
+
+          <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+
+            <div className="flex justify-between text-sm sm:text-base">
+              <p className="text-[#64748B]">
+                Total Lectures
+              </p>
+              <p className="font-semibold text-[#1E293B]">
+                {lectures?.length}
+              </p>
             </div>
-          </div>
 
-          <div className="space-y-2 text-xl">
-            <h1 className="text-3xl font-bold text-yellow-500 mb-5 text-center">
-              {state?.title}
-            </h1>
+            <div className="flex justify-between text-sm sm:text-base">
+              <p className="text-[#64748B]">
+                Instructor
+              </p>
+              <p className="font-semibold text-[#1E293B]">
+                {state?.createdBy}
+              </p>
+            </div>
 
-            <p className="text-yellow-500">Course Description: </p>
-            <p>{state?.description}</p>
+            {role === "ADMIN" || data?.subscription?.status === "active" ? (
+              <button
+                onClick={() =>
+                  navigate("/course/displaylecture", { state: { ...state } })
+                }
+                className="w-full mt-4 bg-[#2563EB] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm"
+              >
+                Watch Lectures
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/checkout")}
+                className="w-full mt-4 bg-[#2563EB] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm"
+              >
+                Subscribe to Access
+              </button>
+            )}
+
           </div>
         </div>
+
+
+        {/* ================= RIGHT SECTION ================= */}
+        <div className="space-y-6">
+
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#1E293B]">
+            {state?.title}
+          </h1>
+
+          <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+            <h2 className="text-lg font-semibold text-[#2563EB]">
+              Course Description
+            </h2>
+
+            <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
+              {state?.description}
+            </p>
+          </div>
+
+        </div>
+
       </div>
-    </HomeLayout>
-  );
+    </div>
+  </HomeLayout>
+);
 }
 
 export default CourseDescription;

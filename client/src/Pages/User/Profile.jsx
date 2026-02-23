@@ -27,57 +27,90 @@ function Profile() {
   }
 
   return (
-    <HomeLayout>
-      <div className="min-h-[90vh] flex items-center justify-center">
-        <div className="my-10 flex flex-col gap-4 rounded-lg p-4 text-white w-120 shadow-[0_0_10px_black]">
+  <HomeLayout>
+    <div className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 py-12">
+
+      <div className="w-full max-w-2xl bg-white rounded-xl shadow-sm p-6 sm:p-8">
+
+        {/* Avatar */}
+        <div className="flex flex-col items-center gap-4 mb-6">
           <img
             src={userData?.avatar?.secure_url}
-            className="w-40 m-auto rounded-full border border-black"
+            alt="User Avatar"
+            className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border border-slate-200"
           />
-          <h3 className="text-xl font-semibold text-center capitalize">
+          <h3 className="text-xl sm:text-2xl font-semibold text-[#1E293B] capitalize">
             {userData?.fullName}
           </h3>
-          <div className="grid grid-cols-2">
-            <p>Email: </p>
-            <p>{userData?.email}</p>
-            <p>Role: </p>
-            <p>{userData?.role}</p>
-            <p>Subscription: </p>
-            <p>
-              {userData?.subscription?.status === "active"
-                ? "Active"
-                : "Inactive"}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between gap-2">
-            <Link
-              to="/changepassword"
-              className="w-1/2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center"
-            >
-              <button>Change Password</button>
-            </Link>
-
-            <Link
-              to="/user/editprofile"
-              className="w-1/2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center"
-            >
-              <button>Edit Profile</button>
-            </Link>
-          </div>
-
-          {userData?.subscription?.status === "active" && (
-            <button
-              onClick={handleCancellation}
-              className="w-full bg-red-600 hover:bg-red-500 transition-all ease-in-out duration-300 rounded-sm font-semibold py-2 cursor-pointer text-center"
-            >
-              Cancel Subscription
-            </button>
-          )}
         </div>
+
+        {/* User Info */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm sm:text-base mb-8">
+
+          <div className="text-[#64748B]">Email</div>
+          <div className="text-[#1E293B] font-medium break-words">
+            {userData?.email}
+          </div>
+
+          <div className="text-[#64748B]">Role</div>
+          <div className="text-[#1E293B] font-medium">
+            {userData?.role}
+          </div>
+
+          <div className="text-[#64748B]">Subscription</div>
+          <div
+            className={`font-medium ${
+              userData?.subscription?.status === "active"
+                ? "text-[#10B981]"
+                : "text-red-500"
+            }`}
+          >
+            {userData?.subscription?.status === "active"
+              ? "Active"
+              : "Inactive"}
+          </div>
+
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-4">
+
+          <Link
+            to="/changepassword"
+            className="flex-1"
+          >
+            <button className="w-full bg-[#2563EB] text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm">
+              Change Password
+            </button>
+          </Link>
+
+          <Link
+            to="/user/editprofile"
+            className="flex-1"
+          >
+            <button className="w-full border border-[#2563EB] text-[#2563EB] py-2.5 rounded-xl font-semibold hover:bg-[#2563EB]/10 transition-all duration-200">
+              Edit Profile
+            </button>
+          </Link>
+
+        </div>
+
+        {/* Cancel Subscription */}
+        {userData?.subscription?.status === "active" && (
+          <button
+            onClick={handleCancellation}
+            className="w-full mt-2 border border-red-500 text-red-500 py-2.5 rounded-xl font-semibold hover:bg-red-50 transition-all duration-200"
+          >
+            Cancel Subscription
+          </button>
+        )}
+
       </div>
-    </HomeLayout>
-  );
+
+    </div>
+  </HomeLayout>
+);
+
 }
 
 export default Profile;

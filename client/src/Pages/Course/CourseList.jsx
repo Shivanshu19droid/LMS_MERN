@@ -25,22 +25,37 @@ function CourseList() {
   console.log(courseData);
 
   return (
-    <HomeLayout>
-      <div className="min-h-[90vh] pt-12 pl-20 flex flex-col gap-10 text-white">
-        <h1 className="text-center text-3xl font-semibold mb-5">
-          Explore the courses made by
-          <span className="font-bold text-yellow-500 m-1">
-            Industry Experts
-          </span>
-        </h1>
-        <div className="nb-10 flex flex-wrap gap-14">
-          {courseData?.map((element) => {
-            return <CourseCard key={element._id} data={element} />;
-          })}
+  <HomeLayout>
+    <div className="min-h-[90vh] bg-[#F8FAFC] px-4 sm:px-6 lg:px-10 py-12">
+
+      <div className="max-w-7xl mx-auto space-y-12">
+
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#1E293B]">
+            Explore Courses by
+            <span className="text-[#2563EB] ml-2">
+              Industry Experts
+            </span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto">
+            Learn from experienced mentors and gain practical skills
+            designed for real-world impact.
+          </p>
         </div>
+
+        {/* Courses Grid */}
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {courseData?.map((element) => (
+            <CourseCard key={element._id} data={element} />
+          ))}
+        </div>
+
       </div>
-    </HomeLayout>
-  );
+    </div>
+  </HomeLayout>
+);
 }
 
 export default CourseList;

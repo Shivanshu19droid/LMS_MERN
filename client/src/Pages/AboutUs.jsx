@@ -8,48 +8,73 @@ function AboutUs() {
   //making an array of objects to display the content inside the carousel
 
   return (
-    <HomeLayout>
-      <div className="pl-20 pr-20 flex flex-col text-white">
-        <div className="flex items-center gap-5 mx-10">
-          <section className="w-1/2 space-y-10">
-            <h1 className="text-5xl text-yellow-500 font-semibold">
-              Affordable and quality education
+  <HomeLayout>
+    <div className="bg-[#F8FAFC] min-h-[90vh] px-4 sm:px-6 lg:px-12 py-16">
+
+      <div className="max-w-7xl mx-auto space-y-20">
+
+        {/* ================= HERO SECTION ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+
+          {/* Subtle Glow */}
+          <div className="absolute w-72 h-72 bg-[#2563EB]/10 rounded-full blur-3xl"></div>
+
+          {/* Left Content */}
+          <section className="relative space-y-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1E293B] leading-tight">
+              Affordable and
+              <span className="text-[#2563EB] ml-2">
+                Quality Education
+              </span>
             </h1>
-            <p className="text-xl text-gray-200">
-              Our goal is to provide affordable and quality education to all
-              students. We believe that every student deserves quality education
-              regardless of their financial background.
+
+            <p className="text-base sm:text-lg text-[#64748B] max-w-xl leading-relaxed">
+              Our mission is to make high-quality learning accessible to everyone.
+              We believe education should empower students regardless of
+              financial background.
             </p>
           </section>
 
-          <div className="w-1/2">
+          {/* Right Image */}
+          <div className="flex justify-center lg:justify-end relative">
             <img
-              id="test1"
-              style={{
-                filter: "drop-shadow(0px 10px 10px rgb(0,0,0))",
-              }}
               alt="about-main-image"
-              className="drop-shadow-2xl"
               src={TreeImage}
+              className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full object-contain drop-shadow-xl"
             />
           </div>
         </div>
 
-        {/* now after the text and image have been added, we will add a carousal here using tehe daisy ui */}
 
-        <div className="carousel w-1/2 my-16 m-auto">
-          {celebrities &&
-            celebrities.map((celebrity) => (
-              <CarouselSlide
-                {...celebrity}
-                key={celebrity.slideNumber}
-                totalSlides={celebrities.length}
-              />
-            ))}
+        {/* ================= CAROUSEL SECTION ================= */}
+        <div className="bg-white rounded-2xl shadow-sm p-8 sm:p-10 space-y-8">
+
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#1E293B]">
+              Meet Industry Experts
+            </h2>
+            <p className="text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto">
+              Learn from professionals who bring real-world experience and
+              practical knowledge to every course.
+            </p>
+          </div>
+
+          <div className="carousel w-full">
+            {celebrities &&
+              celebrities.map((celebrity) => (
+                <CarouselSlide
+                  {...celebrity}
+                  key={celebrity.slideNumber}
+                  totalSlides={celebrities.length}
+                />
+              ))}
+          </div>
         </div>
+
       </div>
-    </HomeLayout>
-  );
+    </div>
+  </HomeLayout>
+);
 }
 
 export default AboutUs;

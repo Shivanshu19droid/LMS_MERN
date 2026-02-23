@@ -19,107 +19,154 @@ function HomeLayout({ children }) {
   }
 
   return (
-    <div className="drawer">
-      {/* Hidden toggle input with peer */}
+  <div className="min-h-screen flex flex-col bg-[#F8FAFC] font-sans text-[#1E293B]">
+    <div className="drawer flex-1">
+
       <input id="my-drawer" type="checkbox" className="drawer-toggle peer" />
 
-      {/* Page content */}
-      <div className="drawer-content flex-col min-h-screen">
-        {/* Navbar toggle button (hidden when drawer is open) */}
-        <label
-          htmlFor="my-drawer"
-          className="cursor-pointer w-fit peer-checked:hidden"
-        >
-          <FiMenu size={32} className="text-white" />
-        </label>
+      {/* Main Content Area */}
+      <div className="drawer-content flex flex-col flex-1 px-4 sm:px-6 lg:px-10">
 
-        {/* Actual page content */}
-        <div className="flex-1">{children}</div>
+        {/* Top Bar */}
+        <div className="flex items-center justify-between py-4">
+
+          <label
+            htmlFor="my-drawer"
+            className="cursor-pointer peer-checked:hidden p-2 rounded-xl hover:bg-[#2563EB]/10 transition-all"
+          >
+            <FiMenu size={26} className="text-[#1E293B]" />
+          </label>
+
+        </div>
+
+        {/* Page Content */}
+        <main className="flex-1 w-full">
+          {children}
+        </main>
 
         {/* Footer */}
         <Footer />
+
       </div>
 
       {/* Sidebar */}
-      <div className="drawer-side">
-        <label htmlFor="my-drawer" className="drawer-overlay"></label>
+      <div className="drawer-side z-50">
+        <label htmlFor="my-drawer" className="drawer-overlay bg-black/30"></label>
 
-        <ul className="menu p-4 w-48 sm:w-80 bg-base-100 text-base-content flex flex-col h-full relative">
-          {/* Cross button inside sidebar */}
-          <li className="w-fit absolute right-2 top-2 z-50">
-            <label htmlFor="my-drawer">
-              <AiFillCloseCircle size={24} />
+        <aside className="w-64 sm:w-72 lg:w-80 bg-white shadow-xl flex flex-col h-full relative overflow-y-auto p-6">
+
+          {/* Close Button */}
+          <div className="absolute right-4 top-4">
+            <label
+              htmlFor="my-drawer"
+              className="cursor-pointer text-[#64748B] hover:text-[#2563EB] transition-colors"
+            >
+              <AiFillCloseCircle size={22} />
             </label>
-          </li>
+          </div>
 
-          {/* Main links */}
-          <div className="flex-grow mt-5">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+          {/* Navigation */}
+          <nav className="flex-grow mt-10 space-y-2 text-[15px] font-medium">
+
+            <Link
+              to="/"
+              className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+            >
+              Home
+            </Link>
 
             {isLoggedIn && role === "ADMIN" && (
               <>
-                <li>
-                  <Link to="/admin/dashboard">Admin Dashboard</Link>
-                </li>
-                <li>
-                  <Link to="/course/create">Create New Course</Link>
-                </li>
+                <Link
+                  to="/admin/dashboard"
+                  className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+                >
+                  Admin Dashboard
+                </Link>
+
+                <Link
+                  to="/course/create"
+                  className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+                >
+                  Create New Course
+                </Link>
               </>
             )}
 
-            <li>
-              <Link to="/courses">All Courses</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
-            </li>
-            <li>
-              <Link to="/about">About Us</Link>
-            </li>
-          </div>
+            <Link
+              to="/courses"
+              className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+            >
+              All Courses
+            </Link>
 
-          {/* Bottom buttons */}
-          <div className="mt-auto">
-            {!isLoggedIn && (
-              <div className="flex gap-4 justify-center">
+            <Link
+              to="/contact"
+              className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+            >
+              Contact Us
+            </Link>
+
+            <Link
+              to="/about"
+              className="block px-4 py-2 rounded-xl hover:bg-[#2563EB]/10 hover:text-[#2563EB] transition-all"
+            >
+              About Us
+            </Link>
+
+          </nav>
+
+          {/* Bottom Auth Buttons */}
+          <div className="mt-auto pt-6 border-t border-slate-200">
+
+            {!isLoggedIn ? (
+              <div className="flex flex-col gap-3">
+
                 <Link
                   to="/login"
-                  className="px-4 py-2 font-semibold w-1/2 rounded-md bg-pink-700 hover:bg-pink-600 text-white text-center"
+                  className="w-full text-center px-4 py-2.5 rounded-xl bg-[#2563EB] text-white font-semibold hover:bg-blue-700 transition-all shadow-sm"
                 >
                   Login
                 </Link>
+
                 <Link
                   to="/signup"
-                  className="px-4 py-2 font-semibold w-1/2 rounded-md bg-purple-800 hover:bg-purple-700 text-white text-center"
+                  className="w-full text-center px-4 py-2.5 rounded-xl border border-[#2563EB] text-[#2563EB] font-semibold hover:bg-[#2563EB]/10 transition-all"
                 >
-                  SignUp
+                  Sign Up
                 </Link>
-              </div>
-            )}
 
-            {isLoggedIn && (
-              <div className="flex gap-4 justify-center">
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+
                 <Link
                   to="/user/profile"
-                  className="px-4 py-2 font-semibold w-1/2 rounded-md bg-pink-700 hover:bg-pink-600 text-white text-center"
+                  className="w-full text-center px-4 py-2.5 rounded-xl bg-[#2563EB] text-white font-semibold hover:bg-blue-700 transition-all shadow-sm"
                 >
                   Profile
                 </Link>
+
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 font-semibold w-1/2 rounded-md bg-purple-800 hover:bg-purple-700 text-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#2563EB] text-[#2563EB] font-semibold hover:bg-[#2563EB]/10 transition-all"
                 >
                   Logout
                 </button>
+
               </div>
             )}
+
           </div>
-        </ul>
+
+        </aside>
       </div>
     </div>
-  );
+  </div>
+);
+
+
+
 }
 
 export default HomeLayout;

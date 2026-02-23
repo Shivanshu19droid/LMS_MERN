@@ -53,69 +53,115 @@ function Contact() {
     }
   }
   return (
-    <HomeLayout>
-      <div className="flex items-center justify-center h-[100vh]">
+  <HomeLayout>
+    <div className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 py-12">
+
+      <div className="w-full max-w-xl bg-white rounded-xl shadow-sm p-6 sm:p-8">
+
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#1E293B] mb-6 text-center">
+          Contact Us
+        </h1>
+
         <form
           noValidate
           onSubmit={onFormSubmit}
-          className="flex flex-col items-center justify-center gap-2 p-5 rounded-md text-white shadow-[0_0_10px_black] w-[22rem]"
+          className="flex flex-col gap-5"
         >
-          <h1 className="text-3xl font-semibold">Contact Form</h1>
 
-          <div className="flex flex-col w-full gap-1">
-            <label htmlFor="name" className="text-xl font-semibold">
+          {/* Name */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="name"
+              className="text-sm font-medium text-[#1E293B]"
+            >
               Name
             </label>
             <input
-              className="bg-transparent border px=2py-1 rounded-sm"
               id="name"
               type="text"
               name="name"
-              placeholder="Enter Your Name"
+              placeholder="Enter your name"
               onChange={handleInputChange}
               value={userInput.name}
+              className="w-full px-4 py-2.5 rounded-xl 
+                         bg-white text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-[#94A3B8]
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/30 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
-          <div className="flex flex-col w-full gap-1">
-            <label htmlFor="email" className="text-xl font-semibold">
+          {/* Email */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-[#1E293B]"
+            >
               Email
             </label>
             <input
-              className="bg-transparent border px=2py-1 rounded-sm"
               id="email"
               type="email"
               name="email"
-              placeholder="Enter Your Email"
+              placeholder="Enter your email"
               onChange={handleInputChange}
               value={userInput.email}
+              className="w-full px-4 py-2.5 rounded-xl 
+                         bg-white text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-[#94A3B8]
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/30 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
-          <div className="flex flex-col w-full gap-1">
-            <label htmlFor="message" className="text-xl font-semibold">
+          {/* Message */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="message"
+              className="text-sm font-medium text-[#1E293B]"
+            >
               Message
             </label>
             <textarea
-              className="bg-transparent border px=2py-1 rounded-sm resize-none h-40"
               id="message"
               name="message"
-              placeholder="Enter Your Message"
+              placeholder="Write your message..."
               onChange={handleInputChange}
               value={userInput.message}
+              className="w-full px-4 py-3 rounded-xl 
+                         bg-white text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-[#94A3B8]
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/30 
+                         focus:border-[#2563EB] 
+                         transition-all 
+                         resize-none h-36"
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-lg cursor-pointer"
+            className="w-full mt-2 bg-[#2563EB] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm"
           >
             Submit
           </button>
+
         </form>
       </div>
-    </HomeLayout>
-  );
+
+    </div>
+  </HomeLayout>
+);
+
+
 }
 
 export default Contact;

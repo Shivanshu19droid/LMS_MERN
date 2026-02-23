@@ -4,20 +4,38 @@ function Denied() {
   const navigate = useNavigate();
 
   return (
-    <main className="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
-      <h1 className="text-9xl font-extrabold text-white tracking-widest">
+  <main className="relative min-h-screen flex flex-col items-center justify-center bg-[#F8FAFC] px-4 text-center overflow-hidden">
+
+    {/* Subtle Blue Glow */}
+    <div className="absolute w-96 h-96 bg-[#2563EB]/10 rounded-full blur-3xl"></div>
+
+    {/* Content */}
+    <div className="relative z-10 space-y-6">
+
+      <h1 className="text-7xl sm:text-8xl lg:text-9xl font-extrabold text-[#2563EB]">
         403
       </h1>
-      <div className="bg-black text-white px-2 text-sm rounded rotate-12 absolute">
-        Access denied
-      </div>
-      <button onClick={() => navigate(-1)} className="mt-5">
-        <span className="relative block px-8 py-3 bg-[#1A2238] border border-current">
-          Go Back
-        </span>
+
+      <h2 className="text-xl sm:text-2xl font-semibold text-[#1E293B]">
+        Access Denied
+      </h2>
+
+      <p className="text-sm sm:text-base text-[#64748B] max-w-md mx-auto">
+        You don’t have permission to view this page.
+        Please contact the administrator if you believe this is a mistake.
+      </p>
+
+      <button
+        onClick={() => navigate(-1)}
+        className="mt-4 px-6 py-3 bg-[#2563EB] text-white rounded-xl font-semibold shadow-sm hover:bg-blue-700 transition-all duration-200"
+      >
+        Go Back
       </button>
-    </main>
-  );
+
+    </div>
+  </main>
+);
+
 }
 
 export default Denied;

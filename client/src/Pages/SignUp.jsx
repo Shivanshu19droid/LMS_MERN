@@ -117,38 +117,65 @@ function SignUp() {
   }
 
   return (
-    <HomeLayout>
-      <div className="flex overflow-x-auto items-center justify-center h-[100vh]">
+  <HomeLayout>
+    <div className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 py-16 bg-[#F8FAFC] overflow-hidden">
+
+      {/* Subtle Background Glow */}
+      <div className="absolute w-[500px] h-[500px] bg-[#2563EB]/10 rounded-full blur-3xl"></div>
+
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 sm:p-10">
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#1E293B] text-center mb-8">
+          Create Your Account
+        </h1>
+
         <form
           noValidate
           onSubmit={createNewAccount}
-          className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]"
+          className="flex flex-col gap-6"
         >
-          <h1 className="text-center text-2xl font-bold">Registration Page</h1>
 
-          <label htmlFor="image_upload" className="cursor-pointer">
-            {previewImage ? (
-              <img
-                className="w-24 h-24 rounded-full m-auto"
-                src={previewImage}
-              ></img>
-            ) : (
-              <BsPersonCircle className="w-24 h-24 rounded-full m-auto" />
-            )}
-          </label>
+          {/* Avatar Upload */}
+          <div className="flex flex-col items-center gap-3">
+            <label
+              htmlFor="image_upload"
+              className="cursor-pointer relative group"
+            >
+              {previewImage ? (
+                <img
+                  src={previewImage}
+                  alt="Profile Preview"
+                  className="w-28 h-28 rounded-full object-cover border border-slate-300"
+                />
+              ) : (
+                <div className="w-28 h-28 rounded-full bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB]">
+                  <BsPersonCircle className="w-16 h-16" />
+                </div>
+              )}
 
-          {/* hidden input to upload the image */}
-          <input
-            onChange={getImage}
-            className="hidden"
-            type="file"
-            name="image_uploads"
-            id="image_upload"
-            accept=".jpg, .jprg, .png, .svg"
-          />
+              <div className="absolute inset-0 rounded-full bg-black/10 opacity-0 group-hover:opacity-100 transition-all duration-200"></div>
+            </label>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold">
+            <input
+              onChange={getImage}
+              className="hidden"
+              type="file"
+              name="image_uploads"
+              id="image_upload"
+              accept=".jpg, .jpeg, .png, .svg"
+            />
+
+            <span className="text-xs text-[#64748B]">
+              Click to upload profile photo
+            </span>
+          </div>
+
+          {/* Email */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-semibold text-[#1E293B]"
+            >
               Email
             </label>
 
@@ -157,15 +184,26 @@ function SignUp() {
               required
               name="email"
               id="email"
-              placeholder="Enter your Email"
-              className="bg-transparent px-2 py-1 border"
+              placeholder="Enter your email"
               onChange={handleUserInput}
               value={signupData.email}
+              className="w-full px-4 py-3 rounded-xl 
+                         !bg-white !text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-slate-400
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/40 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
+          {/* Password */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-semibold text-[#1E293B]"
+            >
               Password
             </label>
 
@@ -175,15 +213,26 @@ function SignUp() {
               required
               id="password"
               placeholder="Enter your password"
-              className="bg-transparent px-2 py-1 border"
               onChange={handleUserInput}
               value={signupData.password}
+              className="w-full px-4 py-3 rounded-xl 
+                         !bg-white !text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-slate-400
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/40 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="fullName" className="font-semibold">
-              Name
+          {/* Full Name */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="fullName"
+              className="text-sm font-semibold text-[#1E293B]"
+            >
+              Full Name
             </label>
 
             <input
@@ -192,30 +241,46 @@ function SignUp() {
               required
               id="fullName"
               placeholder="Enter your full name"
-              className="bg-transparent px-2 py-1 border"
               onChange={handleUserInput}
               value={signupData.fullName}
+              className="w-full px-4 py-3 rounded-xl 
+                         !bg-white !text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-slate-400
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/40 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
+          {/* Submit */}
           <button
-            className="mt-2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-large cursor-pointer"
             type="submit"
+            className="w-full mt-4 bg-[#2563EB] text-white py-3.5 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             Create Account
           </button>
 
-          <p className="text-center">
-            Already have an account ?
-            <Link to="/login" className="link text-accent cursor-pointer">
-              {" "}
-              Login{" "}
+          {/* Redirect */}
+          <p className="text-center text-sm text-[#64748B] mt-4">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-[#2563EB] font-semibold hover:underline"
+            >
+              Login
             </Link>
           </p>
+
         </form>
       </div>
-    </HomeLayout>
-  );
+
+    </div>
+  </HomeLayout>
+);
+
+
 }
 
 export default SignUp;

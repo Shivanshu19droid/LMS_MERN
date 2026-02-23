@@ -4,40 +4,59 @@ function CourseCard({ data }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate("/course/description/", { state: { ...data } })}
-      className="text-white w-[22rem] h-[430px] shadow-lg rounded-lg cursor-pointer group overflow-hidden bg-zinc-700"
-    >
-      <div className="overflow-hidden">
-        <img
-          className="h-48 w-full rounded-tl-lg rounded-tr-lg group-hover:scale=[1,2] transition-all ease-in-out duration-300"
-          src={data?.thumbnail?.secure_url}
-          alt="Course Thumbnail"
-        />
-        <div className="p-3 space-y-1 text-white">
-          <h2 className="text-xl font-bold text-yellow-500line-clamp-2">
-            {data?.title}
-          </h2>
-          <p className="line-clamp-2">{data?.description}</p>
-          <p className="font-semibold">
-            <span className="text-yellow-500 font-bold"> Category : </span>
-            {data?.category}
-          </p>
-          <p className="font-semibold">
-            <span className="text-yellow-500 font-bold">
-              {" "}
-              Total Lectures :{" "}
-            </span>
-            {data?.numberoflectures}
-          </p>
-          <p className="font-semibold">
-            <span className="text-yellow-500 font-bold"> Instructor : </span>
-            {data?.createdBy}
-          </p>
-        </div>
-      </div>
+  <div
+    onClick={() =>
+      navigate("/course/description/", { state: { ...data } })
+    }
+    className="w-full max-w-sm bg-white rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden group"
+  >
+
+    {/* Thumbnail */}
+    <div className="overflow-hidden">
+      <img
+        src={data?.thumbnail?.secure_url}
+        alt="Course Thumbnail"
+        className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
     </div>
-  );
+
+    {/* Content */}
+    <div className="p-5 space-y-3">
+
+      <h2 className="text-lg font-semibold text-[#1E293B] line-clamp-2 group-hover:text-[#2563EB] transition-colors">
+        {data?.title}
+      </h2>
+
+      <p className="text-sm text-[#64748B] line-clamp-2">
+        {data?.description}
+      </p>
+
+      <div className="space-y-1 text-sm">
+
+        <p>
+          <span className="font-medium text-[#64748B]">Category: </span>
+          <span className="text-[#1E293B]">{data?.category}</span>
+        </p>
+
+        <p>
+          <span className="font-medium text-[#64748B]">Lectures: </span>
+          <span className="text-[#1E293B]">
+            {data?.numberoflectures}
+          </span>
+        </p>
+
+        <p>
+          <span className="font-medium text-[#64748B]">Instructor: </span>
+          <span className="text-[#1E293B]">
+            {data?.createdBy}
+          </span>
+        </p>
+
+      </div>
+
+    </div>
+  </div>
+);
 }
 
 export default CourseCard;

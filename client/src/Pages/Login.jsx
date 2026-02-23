@@ -43,17 +43,30 @@ function LogIn() {
   }
 
   return (
-    <HomeLayout>
-      <div className="flex overflow-x-auto items-center justify-center h-[100vh]">
+  <HomeLayout>
+    <div className="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 py-16 bg-[#F8FAFC] overflow-hidden">
+
+      {/* Subtle Background Glow */}
+      <div className="absolute w-[500px] h-[500px] bg-[#2563EB]/10 rounded-full blur-3xl"></div>
+
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 sm:p-10">
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#1E293B] text-center mb-8">
+          Welcome Back
+        </h1>
+
         <form
           noValidate
           onSubmit={onLogin}
-          className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]"
+          className="flex flex-col gap-6"
         >
-          <h1 className="text-center text-2xl font-bold">Login Page</h1>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold">
+          {/* Email */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-semibold text-[#1E293B]"
+            >
               Email
             </label>
 
@@ -62,15 +75,26 @@ function LogIn() {
               required
               name="email"
               id="email"
-              placeholder="Enter your Email"
-              className="bg-transparent px-2 py-1 border"
+              placeholder="Enter your email"
               onChange={handleUserInput}
               value={loginData.email}
+              className="w-full px-4 py-3 rounded-xl 
+                         !bg-white !text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-slate-400
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/40 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
+          {/* Password */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-semibold text-[#1E293B]"
+            >
               Password
             </label>
 
@@ -80,30 +104,45 @@ function LogIn() {
               required
               id="password"
               placeholder="Enter your password"
-              className="bg-transparent px-2 py-1 border"
               onChange={handleUserInput}
               value={loginData.password}
+              className="w-full px-4 py-3 rounded-xl 
+                         !bg-white !text-[#1E293B] 
+                         border border-slate-300 
+                         placeholder:text-slate-400
+                         focus:outline-none 
+                         focus:ring-2 focus:ring-[#2563EB]/40 
+                         focus:border-[#2563EB] 
+                         transition-all"
             />
           </div>
 
+          {/* Login Button */}
           <button
-            className="mt-2 bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-large cursor-pointer"
             type="submit"
+            className="w-full mt-4 bg-[#2563EB] text-white py-3.5 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
           >
             Login
           </button>
 
-          <p className="text-center">
-            Do not have an account ?
-            <Link to="/signup" className="link text-accent cursor-pointer">
-              {" "}
-              Signup{" "}
+          {/* Signup Redirect */}
+          <p className="text-center text-sm text-[#64748B] mt-4">
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-[#2563EB] font-semibold hover:underline"
+            >
+              Sign up
             </Link>
           </p>
+
         </form>
       </div>
-    </HomeLayout>
-  );
+
+    </div>
+  </HomeLayout>
+);
+
 }
 
 export default LogIn;
